@@ -1,1 +1,3 @@
 # vanilla-js
+
+A series of completed exercises from online tutorials...
