@@ -4,27 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Web Audio Recorder</title>
+  <title>Web Audio and Video Recorder</title>
   <link rel="stylesheet" href="styles.css">
-   <link href="https://fonts.googleapis.com/css?family=Courier+Prime&display=swap" rel="stylesheet"> 
+  <link href="https://fonts.googleapis.com/css?family=Courier+Prime&display=swap" rel="stylesheet"> 
 </head>
 <body>
-  <div class="wrapper">
-    <header>
-      <h1>Web Audio Recorder</h1>
-    </header>
-    <section class="main-controls">
-      <canvas id="soundwave-canvas" class="visualizer"></canvas>
-      <div id="buttons">
-        <button class="record">Record</button>
-        <button class="stop">Stop</button>
-      </div>
-    </section>
-    <p>Recordings:</p>
-    <section class="sound-clips">
-    </section>
+
+  <div class="left">
+    <button id="startButton" class="button">
+      Start
+    </button>
+    <h2>Preview</h2>
+    <video id="preview" width="200" height="150" autoplay muted></video>
   </div>
-  <script src="mediaDevices-getUserMedia-polyfill.js"></script>
+  <div class="right">
+    <button id="stopButton" class="button">
+      Stop
+    </button>
+    <h2>Recording</h2>
+    <video id="recording" width="200" height="150" controls></video>
+    <a id="downloadButton" class="button">
+      Download
+    </a>
+  </div>
+  
   <script src="app.js"></script>
 </body>
 </html>

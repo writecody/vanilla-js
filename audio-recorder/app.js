@@ -1,183 +1,78 @@
-// set up basic variables for app
+// Initialize variables
+let preview = document.getElementById("preview");
+let recording = document.getElementById("recording");
+let startButton = document.getElementById("startButton");
+let stopButton = document.getElementById("stopButton");
+let downloadButton = document.getElementById("downloadButton");
+let logParagraph = document.getElementById("logElement");
 
-const record = document.querySelector('.record');
-const stop = document.querySelector('.stop');
-const soundClips = document.querySelector('.sound-clips');
-const canvas = document.querySelector('.visualizer');
-const mainSection = document.querySelector('.main-controls');
+let recordingTimeMS = 5000;
 
-// disable stop button while not recording
-
-stop.disabled = true;
-
-// visualiser setup - create web audio api context and canvas
-
-let audioCtx;
-const canvasCtx = canvas.getContext("2d");
-
-//main block for doing the audio recording
-
-if (navigator.mediaDevices.getUserMedia) {
-  console.log('getUserMedia supported.');
-
-  const constraints = { audio: true };
-  let chunks = [];
-
-  let onSuccess = function (stream) {
-    const mediaRecorder = new MediaRecorder(stream);
-
-    visualize(stream);
-
-    record.onclick = function () {
-      mediaRecorder.start();
-      console.log(mediaRecorder.state);
-      console.log("RECORDING STARTED: ", new Date());
-      record.style.border = "0.1rem solid #E3FABF;";
-      record.innerHTML = "RECORDING";
-
-      stop.disabled = false;
-      record.disabled = true;
-    }
-
-    stop.onclick = function () {
-      mediaRecorder.stop();
-      console.log(mediaRecorder.state);
-      console.log("RECORDING STOPPED: ", new Date());
-      record.style.border = "";
-      record.innerHTML = "Record";
-      // mediaRecorder.requestData();
-
-      stop.disabled = true;
-      record.disabled = false;
-    }
-
-    mediaRecorder.onstop = function (e) {
-      console.log("data available after MediaRecorder.stop() called.");
-
-      const clipName = prompt('Enter a name for your sound clip?', 'Untitled');
-      console.log(clipName);
-      const clipContainer = document.createElement('article');
-      const clipLabel = document.createElement('p');
-      const clipEditBtn = document.createElement('button');
-      clipEditBtn.classList.add('clip-edit-btn');
-      clipEditBtn.textContent = ('Click here to edit clip name');
-      const audio = document.createElement('audio');
-      const deleteButton = document.createElement('button');
-
-      clipContainer.classList.add('clip');
-      audio.setAttribute('controls', '');
-      deleteButton.textContent = 'Delete this clip';
-      deleteButton.className = 'delete';
-
-      if (clipName === null) {
-        clipLabel.style.fontWeight = '600';
-        clipLabel.textContent = 'Untitled';
-      } else {
-        clipLabel.textContent = clipName;
-      }
-
-      clipContainer.appendChild(audio);
-      clipContainer.appendChild(clipLabel);
-      clipContainer.appendChild(deleteButton);
-      soundClips.appendChild(clipContainer);
-
-      audio.controls = true;
-      const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
-      chunks = [];
-      const audioURL = window.URL.createObjectURL(blob);
-      audio.src = audioURL;
-      console.log("RECORDING STOPPED: ", new Date());
-
-      deleteButton.onclick = function (e) {
-        evtTgt = e.target;
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-      }
-
-      clipLabel.onclick = function () {
-        const existingName = clipLabel.textContent;
-        const newClipName = prompt('Enter a new name for your sound clip?');
-        if (newClipName === null) {
-          clipLabel.textContent = existingName;
-        } else {
-          clipLabel.textContent = newClipName;
-        }
-      }
-    }
-
-    mediaRecorder.ondataavailable = function (e) {
-      chunks.push(e.data);
-    }
-  }
-
-  let onError = function (err) {
-    console.log('The following error occured: ' + err);
-  }
-
-  navigator.mediaDevices.getUserMedia(constraints).then(onSuccess, onError);
-
-} else {
-  console.log('getUserMedia not supported on your browser!');
+// Utility functions
+function log(msg) {
+  let logParagraph = document.createElement('p');
+  logParagraph.innerHTML += msg + "\n";
 }
 
-function visualize(stream) {
-  if (!audioCtx) {
-    audioCtx = new AudioContext();
-  }
-
-  const source = audioCtx.createMediaStreamSource(stream);
-
-  const analyser = audioCtx.createAnalyser();
-  analyser.fftSize = 2048;
-  const bufferLength = analyser.frequencyBinCount;
-  const dataArray = new Uint8Array(bufferLength);
-
-  source.connect(analyser);
-  analyser.connect(audioCtx.destination);
-
-  draw()
-
-  function draw() {
-    WIDTH = canvas.width
-    HEIGHT = canvas.height;
-
-    requestAnimationFrame(draw);
-
-    analyser.getByteTimeDomainData(dataArray);
-
-    canvasCtx.fillStyle = '#33596E';
-    canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-    canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = '#E3FABF';
-
-    canvasCtx.beginPath();
-
-    let sliceWidth = WIDTH * 1.0 / bufferLength;
-    let x = 0;
-
-
-    for (let i = 0; i < bufferLength; i++) {
-
-      let v = dataArray[i] / 128.0;
-      let y = v * HEIGHT / 2;
-
-      if (i === 0) {
-        canvasCtx.moveTo(x, y);
-      } else {
-        canvasCtx.lineTo(x, y);
-      }
-
-      x += sliceWidth;
-    }
-
-    canvasCtx.lineTo(canvas.width, canvas.height / 2);
-    canvasCtx.stroke();
-
-  }
+function wait(delayInMS) {
+  return new Promise(resolve => setTimeout(resolve, delayInMS));
 }
 
-window.onresize = function () {
-  canvas.width = mainSection.offsetWidth;
+// Start recording
+function startRecording(stream, lengthInMS) {
+  let recorder = new MediaRecorder(stream);
+  let data = [];
+
+  recorder.ondataavailable = event => data.push(event.data);
+  recorder.start();
+  log(recorder.state + " for " + (lengthInMS / 1000) + " seconds...");
+
+  let stopped = new Promise((resolve, reject) => {
+    recorder.onstop = resolve;
+    recorder.onerror = event => reject(event.name);
+  });
+
+  let recorded = wait(lengthInMS).then(
+    () => recorder.state == "recording" && recorder.stop()
+  );
+
+  return Promise.all([
+    stopped,
+    recorded
+  ])
+    .then(() => data);
 }
 
-window.onresize();
+// Stop the input stream
+function stop(stream) {
+  stream.getTracks().forEach(track => {
+    track.stop();
+  });
+}
+
+// Get an input stream and set up the recorder
+startButton.addEventListener("click", function () {
+  navigator.mediaDevices.getUserMedia({
+    video: true,
+    audio: true
+  }).then(stream => {
+    preview.srcObject = stream;
+    downloadButton.href = stream;
+    preview.captureStream = preview.captureStream || preview.mozCaptureStream;
+    return new Promise(resolve => preview.onplaying = resolve);
+  }).then(() => startRecording(preview.captureStream(), recordingTimeMS))
+    .then(recordedChunks => {
+      let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+      recording.src = URL.createObjectURL(recordedBlob);
+      downloadButton.href = recording.src;
+      downloadButton.download = "RecordedVideo.webm";
+
+      log("Successfully recorded " + recordedBlob.size + " bytes of " + recordedBlob.type + " media.");
+    })
+    .catch(log);
+}, false);
+
+// Stop button handler
+stopButton.addEventListener("click", function () {
+  stop(preview.srcObject);
+}, false);
