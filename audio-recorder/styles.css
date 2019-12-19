@@ -1,0 +1,58 @@
+* {
+  font-family: 'Courier Prime', monospace;
+}
+
+button {
+  margin: 1rem;
+}
+
+.clip {
+  border: 0.1rem solid darkgray;
+  padding: 1rem;
+}
+
+.clip-edit-btn {
+  cursor: pointer;
+  background: #33596E;
+  color: #E3FABF;
+}
+
+.delete {
+  background: #470D32;
+  color: #E3FABF;
+  font-size: 1rem;
+}
+
+.main-controls {
+
+}
+
+.record {
+  background: #E3FABF;
+  color: #470D32;
+  font-size: 1.5rem;
+}
+
+.sound-clips {
+  color: #470D32;
+}
+
+.stop {
+  background: #E3FABF;
+  color: #33596E;
+  font-size: 1.5rem;
+}
+
+.wrapper {
+  padding: 1rem;
+}
+
+/* 
+Colors
+
+#E3FABF;
+#8ED3A8;
+#5BA197;
+#33596E;
+#470D32;
+*/

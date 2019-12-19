@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Web Audio Recorder</title>
+  <link rel="stylesheet" href="styles.css">
+   <link href="https://fonts.googleapis.com/css?family=Courier+Prime&display=swap" rel="stylesheet"> 
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Web Audio Recorder</h1>
+    </header>
+    <section class="main-controls">
+      <canvas id="soundwave-canvas" class="visualizer"></canvas>
+      <div id="buttons">
+        <button class="record">Record</button>
+        <button class="stop">Stop</button>
+      </div>
+    </section>
+    <p>Recordings:</p>
+    <section class="sound-clips">
+    </section>
+  </div>
+  <script src="mediaDevices-getUserMedia-polyfill.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
