@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./index.css">
+    <link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Source+Sans+Pro&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Task List</title>
+</head>
+<body>
+    <div class="container">
+        <div class="col">
+            <div id="main" class="card">
+                <div class="card-content">
+                    <span class="card-title">Task List</span>
+                    <div>
+                        <form id="task-form" class="form">
+                            <div class="input col">
+                                <input type="text" name="task" id="task">
+                            </div>
+                            <label for="task">New Task</label>
+                            <input type="submit" value="Add to List" class="btn">
+                        </form>
+                    </div>
+                </div>
+                <div class="card-action">
+                    <p id="task-title" class="task-title">Incomplete Tasks</p>
+                    <div class="input col">
+                        <input type="text" name="filter" id="filter">
+                        <label for="filter" class="filter-text">Filter Tasks</label>
+                    </div>
+                    <ul class="collection"></ul>
+                    <a href="#" class="clear-tasks">Clear Tasks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+.btn {
+    background-color: #3F4958;
+    color: #D9CDB7;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}
+
+.card {
+    border: 0.0825rem solid #AD8F62;
+    padding: 1rem;
+}
+
+.card-action {
+    color: #3F4958;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 1.025rem;
+}
+
+.card-content {
+    box-shadow: 0 -0.25rem 0.4rem rgba(55, 23, 35, 0.2);
+    color: #3F4958;
+    font-family: 'Source Sans Pro', sans-serif;
+    padding: 1.025rem;
+}
+
+.card-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.clear-tasks {
+    background-color: #EEE;
+    border: 0.0825rem solid #AD8F62;
+    color: #AD8F62;
+    font-size: 1rem;
+    padding: 0 0.25rem;
+    text-decoration: none;
+}
+
+.col {
+    display: block;
+}
+
+.collection {
+    color: #3F4958;
+    list-style: square;
+}
+
+.collection-item {
+    color: #3F4958;
+}
+
+.container {
+    display: flex;
+    padding: 1rem;
+}
+
+.filter-text {
+    color: #AD8F62;
+    font-size: 0.625rem;
+    margin-top: 0.5rem;
+}
+
+.form {
+    border-bottom: 0.0325rem solid #AD8F62;
+    padding-bottom: 1rem;
+}
+
+.input {
+    color: #3F4958;
+    margin: 0.5rem 0;
+    width: 5rem;
+}
+
+i {
+    color: #AD8F62;
+    margin-left: 0.3rem;
+}
+
+label {
+    display: block;
+    font-size: 0.75rem;
+}
+
+.task-title {
+    font-size: 1rem;
+    margin: 0;
+}
