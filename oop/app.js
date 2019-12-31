@@ -3,7 +3,6 @@
 // Person constructor
 function Person(name, dob) {
     this.name = name;
-    // this.age = age;
     this.birthday = new Date(dob);
     this.calculateAge = function() {
         const diff = Date.now() - this.birthday.getTime();
