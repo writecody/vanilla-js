@@ -1,0 +1,51 @@
+* {
+    color: #315053;
+    font-family: 'Crimson Text', serif;
+}
+
+.book-row {
+    color: #A29479;
+}
+
+.delete {
+    color: #6C023F;
+    cursor: pointer;
+    text-align: center;
+}
+
+.error {
+    background: #6C023F; 
+}
+
+h1, h2 {
+    color: #0C1013;
+    font-family: 'Ibarra Real Nova', serif;
+    font-weight: 600;
+}
+
+#submit-button {
+    background: #315053;
+    color: #DADADA;
+}
+
+.success {
+    background: #315053;
+}
+
+.success, .error {
+    color: #DADADA;
+    padding: 0.0125rem;
+    margin: .125rem 0;
+}
+
+
+/* COLORS */
+
+ 
+/* 
+beige: #B1B4AB;
+black: #0C1013;
+dark gray: #315053;  
+light gray: #DADADA;
+sand: #A29479;
+*/
