@@ -1,0 +1,26 @@
+[
+    {
+        "id": 1,
+        "name": "John Smith",
+        "company": "DesignCo",
+        "phone1": "559-393-2121"
+    },
+    {
+        "id": 2,
+        "name": "Danelo Jefferson",
+        "company": "SparkPlug, Inc.",
+        "phone1": "388-233-2663"
+    },
+    {
+        "id": 3,
+        "name": "Erin Moriarty",
+        "company": "DesignCo",
+        "phone1": "559-393-9883"
+    },
+    {
+        "id": 4,
+        "name": "Tomas Son",
+        "company": "AutoMakers.com",
+        "phone1": "212-238-3988"
+    }
+]
